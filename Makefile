@@ -1,7 +1,7 @@
 ORG_DIR := ~/org
 
 LDAP_DN := "cn=admin,dc=befour,dc=org"
-LDAP_PASSWD := password
+LDAP_PASSWD := meh # override via CL args
 LDIF_FILE := ./contacts.ldif
 
 ADDRESSBOOK_TEMPLATE := $(ORG_DIR)/addressbook
