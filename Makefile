@@ -5,7 +5,7 @@ LDAP_PASSWD := meh # override via CL args
 LDIF_FILE := ./contacts.ldif
 
 ADDRESSBOOK_TEMPLATE := $(ORG_DIR)/addressbook
-ALIASES_FILE := ~/.mutt/aliases
+ALIASES_FILE := ~/.mutt-private/aliases
 ADDRESSBOOK_FILE := $(ADDRESSBOOK_TEMPLATE).org
 BITLBEE_FILE := /var/lib/bitlbee/seb.xml 
 
