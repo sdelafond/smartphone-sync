@@ -1,13 +1,14 @@
 ORG_DIR := ~/org
 
-LDAP_DN := "cn=admin,dc=befour,dc=org"
+LDAP_BASE := "dc=befour,dc=org"
+LDAP_DN := "cn=admin,$(LDAP_BASE)"
 LDAP_PASSWD := meh # override via CL args
 LDIF_FILE := ./contacts.ldif
 
 ADDRESSBOOK_TEMPLATE := $(ORG_DIR)/addressbook
 ALIASES_FILE := ~/.mutt-private/aliases
 ADDRESSBOOK_FILE := $(ADDRESSBOOK_TEMPLATE).org
-BITLBEE_FILE := /var/lib/bitlbee/seb.xml 
+BITLBEE_FILE := ./seb.xml
 
 ADDRESSBOOK_HTML_FILE := $(ADDRESSBOOK_TEMPLATE).html
 VCF_ADDRESSBOOK_FILE := $(ORG_DIR)/phones.vcf
@@ -26,7 +27,7 @@ ldap: ldif
 	ldapadd -c -x -D $(LDAP_DN) -f $(LDIF_FILE) -w $(LDAP_PASSWD)
 
 delete:
-	awk -F': ' '/dn:/ {print $$2}' $(LDIF_FILE) | ldapdelete -c -x -D $(LDAP_DN) -w $(LDAP_PASSWD) || true
+	ldapsearch -x -b $(LDAP_BASE) | awk -F': ' '/dn:.+cn/ && !/admin/ {print $$2}' | ldapdelete -c -x -D $(LDAP_DN) -w $(LDAP_PASSWD) || true
 	rm -f $(LDIF_FILE) $(VCF_ADDRESSBOOK_FILE) $(ADDRESSBOOK_HTML_FILE) $(CSV_ADDRESSBOOK_FILE)
 
 vcf: $(VCF_ADDRESSBOOK_FILE)
