@@ -27,7 +27,7 @@ ldap: ldif
 	ldapadd -c -x -D $(LDAP_DN) -f $(LDIF_FILE) -w $(LDAP_PASSWD)
 
 delete:
-	ldapsearch -x -b $(LDAP_BASE) | awk -F': ' '/dn:.+cn/ && !/admin/ {print $$2}' | ldapdelete -c -x -D $(LDAP_DN) -w $(LDAP_PASSWD) || true
+	ldapsearch -x -b $(LDAP_BASE) | perl -ne 'if (! m/(admin|^dn: dc)/ &&  m/^dn:[:\s]+(.*)$$/) { print `echo $$1 | base64 -d 2> /dev/null || echo $$1` . "\n" }'  | ldapdelete -c -x -D $(LDAP_DN) -w $(LDAP_PASSWD) || true
 	rm -f $(LDIF_FILE) $(VCF_ADDRESSBOOK_FILE) $(ADDRESSBOOK_HTML_FILE) $(CSV_ADDRESSBOOK_FILE)
 
 vcf: $(VCF_ADDRESSBOOK_FILE)
