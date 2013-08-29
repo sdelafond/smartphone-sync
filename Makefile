@@ -39,7 +39,7 @@ $(VCF_ADDRESSBOOK_FILE): ldap
 
 addressbook: $(ADDRESSBOOK_HTML_FILE)
 $(ADDRESSBOOK_HTML_FILE): vcf
-	emacs -nw --eval '(progn (org-mode) (find-file "$(ADDRESSBOOK_FILE)") (org-export-as-html "$(ADDRESSBOOK_HTML_FILE)") (kill-emacs))'
+	emacs -nw --eval '(progn (org-mode) (find-file "$(ADDRESSBOOK_FILE)") (org-html-export-as-html "$(ADDRESSBOOK_HTML_FILE)") (kill-emacs))'
 
 csv: $(CSV_ADDRESSBOOK_FILE)
 $(CSV_ADDRESSBOOK_FILE): vcf
