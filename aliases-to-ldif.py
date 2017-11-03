@@ -5,7 +5,7 @@ logger = logging.getLogger("aliases-to-ldif")
 logger.setLevel(logging.DEBUG)
 # create console handler and set level to debug
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 # create formatter
 formatter = logging.Formatter("%(asctime)s %(levelname)7s: %(message)s")
 # add formatter to ch
